@@ -5,6 +5,8 @@ export default function AddComponent() {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const date = new Date();
+  const options = { timeZone: 'America/New_York', month: 'numeric', day: 'numeric', year: 'numeric' };
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
 
   function handleName(name) {
     setName(name)
@@ -17,10 +19,10 @@ export default function AddComponent() {
     const makeBod = {
       name: name,
       description: description,
-      createOn: `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`
+      createOn: formattedDate
     }
     const res = await axios.post('/api/v1/postData', makeBod);
-    if(res.status === 201){
+    if (res.status === 201) {
       window.location.reload();
     }
   }
@@ -39,7 +41,7 @@ export default function AddComponent() {
       </div>
       <div className="row">
         <div className="col">
-          <button className="btn btn-secondary" onClick={()=> handleSave()}>Save</button>
+          <button className="btn btn-secondary" onClick={() => handleSave()}>Save</button>
         </div>
       </div>
     </div>
